@@ -1,0 +1,78 @@
+// analysis of bluetooth communication by the supercube app
+
+aadb 0011 handle
+aadb 0012 charact notify read  //cube state
+aadc 0013 aadb charact 
+
+aaaa 0016 handle notify
+aaab 0018 aaaa cahract write response: true
+
+aaaa 0019
+aaac 0019 charact no attribute
+
+aaaa 0017 chract aaab uuid 2902
+
+handle 001b charact 001c
+service 000015301212efde1523785... write no response
+001c charact
+
+handle 0020 charct 0021
+service 000015301212efde1523785... read
+
+handle 001f 
+
+request notify 0017 ???
+
+write b5 to handle 0019  //battery level ??
+
+0016 handle value notification b5 44 03 64 78 a3 79 00 00 00 00 00 00 00
+
+write b6 to handle 0019
+
+write ba to handle 0019
+
+0016 handle value notification ba d1 4e 38 5f 94 79 00 00 00 00 00 00 00
+
+write b7 to handle 0019
+
+0016 handle value notification b7 23 4e 38 5f 94 79 00 00 00 00 00 00 00
+
+write cc to handle 0019
+
+0016 handle value notification cc 00 00 68 78 94 79 00 00 00 00 00 00 00
+
+
+write b5 to handle 0019
+
+write b6 to handle 0019 //no response
+
+write ba to handle 0019 // mystery
+
+0016 handle value notification b5 44 03 64 78 a3 79 00 00 00 00 00 00 00
+
+0016 handle value notification ba d1 4e 38 5f 94 79 00 00 00 00 00 00 00
+
+write b7 to handle 0019 //mystery
+
+write cc to handle 0019 //move count
+
+0016 handle value notification b7 23 4e 38 5f 94 79 00 00 00 00 00 00 00
+
+0016 handle value notification cc 00 00 69 02 94 79 00 00 00 00 00 00 00  //changed 26882 from 26744
+
+write a1 to handle 0019 //also move count?  - reset cube to solved
+
+0016 handle value notification a1 00 00 69 02 94 79 00 00 00 00 00 00 00
+
+0016 handle value notification b8 a0 00 69 08 94 79 00 00 00 00 00 00 00
+
+
+writes to aaac
+cc move count
+a1 reset to solved
+a4 reset to 16 byte status
+b5 battery level?
+b6 no response
+b7 mystery
+b8 mystery
+ba mystery no request
