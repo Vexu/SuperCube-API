@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SuperCuber.iml" filepath="$PROJECT_DIR$/SuperCuber.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/supercubeapi/supercubeapi.iml" filepath="$PROJECT_DIR$/supercubeapi/supercubeapi.iml" />
     </modules>
   </component>
 </project>

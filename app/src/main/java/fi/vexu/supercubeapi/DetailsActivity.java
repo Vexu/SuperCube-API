@@ -4,13 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import fi.vexu.supercubeapi.SuperCube.SuperCube;
-import fi.vexu.supercubeapi.SuperCube.SuperCubeListener;
 
 public class DetailsActivity extends AppCompatActivity {
     private final static String TAG = DetailsActivity.class.getSimpleName();
@@ -45,8 +41,12 @@ public class DetailsActivity extends AppCompatActivity {
         final TextView cubeState = findViewById(R.id.cubestatus);
         final TextView cubeInfo = findViewById(R.id.cubeinfo);
 
-
-        mSuperCube = new SuperCube(mDeviceName, mDeviceAddress);
+        if (savedInstanceState != null) {
+            mSuperCube = savedInstanceState.getParcelable("superCube");
+        } else {
+            mSuperCube = new SuperCube(mDeviceName, mDeviceAddress);
+        }
+        mSuperCube.connect(this);
         mSuperCube.setSuperCubeListener(new SuperCubeListener() {
             @Override
             public void onStatusReceived() {
@@ -86,13 +86,11 @@ public class DetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onConnectionStateUpdated(String state) {
-                textViewState.setText(state);
+            public void onConnectionStateUpdated() {
+                textViewState.setText(mSuperCube.getConnectionState());
             }
         });
-        if (!mSuperCube.connect(this)) {
-            Log.e(TAG, "SuperCube connection failed");
-        }
+        textViewState.setText(mSuperCube.getConnectionState());
 
         getMoves.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +145,14 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSuperCube.close();
+        if (!isChangingConfigurations()) {
+            mSuperCube.disconnect();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        state.putParcelable("superCube", mSuperCube);
     }
 }

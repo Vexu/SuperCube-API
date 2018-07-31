@@ -1,4 +1,4 @@
-package fi.vexu.supercubeapi.SuperCube;
+package fi.vexu.supercubeapi;
 
 /**
  * Created 28.7.2018.
@@ -25,7 +25,7 @@ public interface SuperCubeListener {
     void onResetReceived(byte[] response);
     void onOtherReceived(byte[] response);
     void onCubeReady();
-    void onConnectionStateUpdated(String state);
+    void onConnectionStateUpdated();
 
     /*void onResetSolved(byte[] response);
     void onResetCustom(byte[] response);

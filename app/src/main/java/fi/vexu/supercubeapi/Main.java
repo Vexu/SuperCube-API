@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -78,7 +79,10 @@ public class Main extends AppCompatActivity {
         });
         cubeListView = findViewById(R.id.cubelist);
 
-        cubes = new ArrayList<>();
+        if (savedInstanceState == null)
+            cubes = new ArrayList<>();
+        else
+            cubes = savedInstanceState.getParcelableArrayList("cubes");
         cubeAdapter = new CubeAdapter(this, android.R.layout.simple_list_item_1, cubes);
         cubeListView.setAdapter(cubeAdapter);
         cubeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,6 +104,7 @@ public class Main extends AppCompatActivity {
 
         mHandler = new Handler();
         requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+        final Intent intent = new Intent(Main.this, DetailsActivity.class);
     }
 
     @Override
@@ -171,6 +176,12 @@ public class Main extends AppCompatActivity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        state.putParcelableArrayList("cubes", (ArrayList<? extends Parcelable>) cubes);
     }
 
     private void getBluetoothAdapterAndLeScanner(){
